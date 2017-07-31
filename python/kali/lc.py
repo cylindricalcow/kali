@@ -1432,14 +1432,14 @@ class lc(object):
         """
         raise NotImplementedError(r'Override read by subclassing lc!')
 
-    @abc.abstractmethod
-    def write(self, name, band, path=os.environ['PWD'], **kwargs):
-        """!
-        \brief Write the light curve to disk.
+   # @abc.abstractmethod
+   # def write(self, name, band, path=os.environ['PWD'], **kwargs):
+   #     """!
+   #     \brief Write the light curve to disk.
 
-        Not implemented
-        """
-        raise NotImplementedError(r'Override write by subclassing lc!')
+   #     Not implemented
+   #     """
+   #     raise NotImplementedError(r'Override write by subclassing lc!')
 
 
 class lcIterator(object):
