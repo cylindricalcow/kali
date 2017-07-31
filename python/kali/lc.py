@@ -1483,7 +1483,7 @@ class mockLC(lc):
                 # all SDSS S82 data should live first...')
                 self.path = os.environ['HOME']
         else:
-            elf.path = path
+            self.path = path
         numCadences = kwargs.get('numCadences')  # The number of cadences in the light curve. This is
         # not the same thing as the number of actual observations as we can have missing observations.
         deltaT = kwargs.get('deltaT')
