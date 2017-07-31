@@ -1550,12 +1550,12 @@ class externalLC(lc):
         if yerr is not None:
             self.yerr = np.require(yerr, requirements=['F', 'A', 'W', 'O', 'E'])
         else:
-            raise Keyerror('Must supply key-word argument yerr!')
+            raise KeyError('Must supply key-word argument yerr!')
         mask = kwargs.get('maskIn')
         if mask is not None:
             self.mask = np.require(mask, requirements=['F', 'A', 'W', 'O', 'E'])
         else:
-            raise Keyerror('Must supply key-word argument mask!')
+            raise KeyError('Must supply key-word argument mask!')
         self.xunit = kwargs.get('xunit', r'$t$')
         self.yunit = kwargs.get('yunit', r'$F$')
     def write(self, name=None, band=None, pwd=None, **kwargs):
