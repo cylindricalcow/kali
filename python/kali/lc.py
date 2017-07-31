@@ -1558,6 +1558,6 @@ class externalLC(lc):
             raise Keyerror('Must supply key-word argument mask!')
         self.xunit = kwargs.get('xunit', r'$t$')
         self.yunit = kwargs.get('yunit', r'$F$')
-    def write(self):
+    def write(self, name=None, band=None, pwd=None, **kwargs):
         pass
         
