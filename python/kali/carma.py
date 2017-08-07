@@ -1038,6 +1038,12 @@ class CARMATask(object):
         for dimNum in xrange(self.ndims):
             meanTheta.append(np.mean(self.Chain[dimNum, :, self.nsteps/2:]))
         meanTheta = np.require(meanTheta, requirements=['F', 'A', 'W', 'O', 'E'])
+        
+        medTheta = list()
+        for dimNum in xrange(self.ndims):
+            medTheta.append(np.median(self.Chain[dimNum, :, self.nsteps/2:]))
+        medTheta = np.require(medTheta, requirements=['F', 'A', 'W', 'O', 'E'])
+        
         self.set(observedLC.dt, meanTheta)
         devianceThetaBar = -2.0*self.logLikelihood(observedLC)
         barDeviance = np.mean(-2.0*self.LnLikelihood[:, self.nsteps/2:])
@@ -1048,6 +1054,9 @@ class CARMATask(object):
         self.bestTheta
         self.bestRho
         self.bestTau
+        self.medTau
+        self.medTheta
+        self.medRho
         return res
 
     @property
@@ -1079,7 +1088,38 @@ class CARMATask(object):
             bestStep = np.where(np.max(self.LnPosterior) == self.LnPosterior)[1][0]
             self._bestTau = copy.copy(self.timescaleChain[:, bestWalker, bestStep])
             return self._bestTau
-
+    
+    @property
+    def medTau(self):
+        if hasattr(self, '_medTau'):
+            return self._medTau
+        else:
+            medTau = list()
+            for dimNum in xrange(self.ndims):
+                medTau.append(np.median(self.timescaleChain[dimNum, :, self.nsteps/2:]))
+            self._medTau = np.require(medTau, requirements=['F', 'A', 'W', 'O', 'E'])
+            return self._medTau
+    
+    @property
+    def medTheta(self):
+        if hasattr(self, '_medTheta'):
+            return self._medTheta
+        else:
+            medTheta = list()
+            for dimNum in xrange(self.ndims):
+                medTheta.append(np.median(self.Chain[dimNum, :, self.nsteps/2:]))
+            self._medTheta = np.require(medTheta, requirements=['F', 'A', 'W', 'O', 'E'])
+            return self._medTheta
+    @property
+    def medRho(self):
+        if hasattr(self, '_medRho'):
+            return self._medRho
+        else:
+            medRho = list()
+            for dimNum in xrange(self.ndims):
+                medRho.append(np.median(self.rootChain[dimNum, :, self.nsteps/2:]))
+            self._medRho= np.require(medRho, requirements=['F', 'A', 'W', 'O', 'E'])        
+            return self._medRho
     def clear(self):
         if hasattr(self, '_rootChain'):
             del self._rootChain
