@@ -1057,6 +1057,9 @@ class CARMATask(object):
         self.medTau
         self.medTheta
         self.medRho
+        self.perTau
+        self.perTheta
+        self.perRho
         return res
 
     @property
@@ -1120,6 +1123,39 @@ class CARMATask(object):
                 medRho.append(np.median(self.rootChain[dimNum, :, self.nsteps/2:]))
             self._medRho= np.require(medRho, requirements=['F', 'A', 'W', 'O', 'E'])        
             return self._medRho
+        @property
+    def perTau(self, perc):
+        if hasattr(self, '_perTau'):
+            return self._perTau
+        else:
+            perTau = list()
+            for dimNum in xrange(self.ndims):
+                perTau.append(np.percentile(self.timescaleChain[dimNum, :, self.nsteps/2:],perc))
+            self._perTau = np.require(perTau, requirements=['F', 'A', 'W', 'O', 'E'])
+            return self._perTau
+    
+    @property
+    def perTheta(self,perc):
+        if hasattr(self, '_perTheta'):
+            return self._perTheta
+        else:
+            perTheta = list()
+            for dimNum in xrange(self.ndims):
+                perTheta.append(np.percentile(self.Chain[dimNum, :, self.nsteps/2:],perc))
+            self._perTheta = np.require(perTheta, requirements=['F', 'A', 'W', 'O', 'E'])
+            return self._perTheta
+    @property
+    def perRho(self,per):
+        if hasattr(self, '_perRho'):
+            return self._perRho
+        else:
+            perRho = list()
+            for dimNum in xrange(self.ndims):
+                perRho.append(np.percentile(self.rootChain[dimNum, :, self.nsteps/2:],perc))
+            self._perRho= np.require(perRho, requirements=['F', 'A', 'W', 'O', 'E'])        
+            return self._perRho
+    
+    
     def clear(self):
         if hasattr(self, '_rootChain'):
             del self._rootChain
@@ -1131,7 +1167,7 @@ class CARMATask(object):
             del self._bestRho
         if hasattr(self, '_bestTau'):
             del self._bestTau
-
+ 
     def smooth(self, observedLC, startT=None, stopT=None, tnum=None):
         if tnum is None:
             tnum = 0
