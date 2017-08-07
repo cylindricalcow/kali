@@ -1058,9 +1058,9 @@ class CARMATask(object):
         self.medTheta
         self.medRho
         
-        self.perTau(16)
-        self.perTheta(16)
-        self.perRho(16)
+        self.perTau(self,16)
+        self.perTheta(self,16)
+        self.perRho(self,16)
         return res
 
     @property
