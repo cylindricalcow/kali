@@ -1058,9 +1058,12 @@ class CARMATask(object):
         self.medTheta
         self.medRho
         
-        self.perTau(self,16)
-        self.perTheta(self,16)
-        self.perRho(self,16)
+        self.lowerTau
+        self.lowerTheta
+        self.lowerRho
+        self.upperTau
+        self.upperTheta
+        self.upperRho
         return res
 
     @property
@@ -1125,37 +1128,67 @@ class CARMATask(object):
             self._medRho= np.require(medRho, requirements=['F', 'A', 'W', 'O', 'E'])        
             return self._medRho
     @property
-    def perTau(self, perc):
-        if hasattr(self, '_perTau'):
-            return self._perTau
+    def upperTau(self):
+        if hasattr(self, '_upperTau'):
+            return self._upperTau
         else:
-            perTau = list()
+            upperTau = list()
             for dimNum in xrange(self.ndims):
-                perTau.append(np.percentile(self.timescaleChain[dimNum, :, self.nsteps/2:],perc))
-            self._perTau = np.require(perTau, requirements=['F', 'A', 'W', 'O', 'E'])
-            return self._perTau
+                upperTau.append(np.percentile(self.timescaleChain[dimNum, :, self.nsteps/2:],84))
+            self._upperTau = np.require(upperTau, requirements=['F', 'A', 'W', 'O', 'E'])
+            return self._upperTau
     
     @property
-    def perTheta(self,perc):
-        if hasattr(self, '_perTheta'):
-            return self._perTheta
+    def upperTheta(self):
+        if hasattr(self, '_upperTheta'):
+            return self._upperTheta
         else:
-            perTheta = list()
+            upperTheta = list()
             for dimNum in xrange(self.ndims):
-                perTheta.append(np.percentile(self.Chain[dimNum, :, self.nsteps/2:],perc))
-            self._perTheta = np.require(perTheta, requirements=['F', 'A', 'W', 'O', 'E'])
-            return self._perTheta
+                upperTheta.append(np.percentile(self.Chain[dimNum, :, self.nsteps/2:],84))
+            self._upperTheta = np.require(upperTheta, requirements=['F', 'A', 'W', 'O', 'E'])
+            return self._upperTheta
     @property
-    def perRho(self,per):
-        if hasattr(self, '_perRho'):
-            return self._perRho
+    def upperRho(self):
+        if hasattr(self, '_upperRho'):
+            return self._upperRho
         else:
-            perRho = list()
+            upperRho = list()
             for dimNum in xrange(self.ndims):
-                perRho.append(np.percentile(self.rootChain[dimNum, :, self.nsteps/2:],perc))
-            self._perRho= np.require(perRho, requirements=['F', 'A', 'W', 'O', 'E'])        
-            return self._perRho
+                upperRho.append(np.percentile(self.rootChain[dimNum, :, self.nsteps/2:],84))
+            self._upperRho= np.require(upperRho, requirements=['F', 'A', 'W', 'O', 'E'])        
+            return self._upperRho
+    @property
+    def lowerTau(self):
+        if hasattr(self, '_lowerTau'):
+            return self._lowerTau
+        else:
+            lowerTau = list()
+            for dimNum in xrange(self.ndims):
+                lowerTau.append(np.percentile(self.timescaleChain[dimNum, :, self.nsteps/2:],16))
+            self._lowerTau = np.require(lowerTau, requirements=['F', 'A', 'W', 'O', 'E'])
+            return self._lowerTau
     
+    @property
+    def lowerTheta(self):
+        if hasattr(self, '_lowerTheta'):
+            return self._lowerTheta
+        else:
+            lowerTheta = list()
+            for dimNum in xrange(self.ndims):
+                lowerTheta.append(np.percentile(self.Chain[dimNum, :, self.nsteps/2:],16))
+            self._lowerTheta = np.require(lowerTheta, requirements=['F', 'A', 'W', 'O', 'E'])
+            return self._lowerTheta
+    @property
+    def lowerRho(self):
+        if hasattr(self, '_lowerRho'):
+            return self._lowerRho
+        else:
+            lowerRho = list()
+            for dimNum in xrange(self.ndims):
+                lowerRho.append(np.percentile(self.rootChain[dimNum, :, self.nsteps/2:],16))
+            self._lowerRho= np.require(lowerRho, requirements=['F', 'A', 'W', 'O', 'E'])        
+            return self._lowerRho
     
     def clear(self):
         if hasattr(self, '_rootChain'):
