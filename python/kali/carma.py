@@ -1123,7 +1123,7 @@ class CARMATask(object):
                 medRho.append(np.median(self.rootChain[dimNum, :, self.nsteps/2:]))
             self._medRho= np.require(medRho, requirements=['F', 'A', 'W', 'O', 'E'])        
             return self._medRho
-        @property
+    @property
     def perTau(self, perc):
         if hasattr(self, '_perTau'):
             return self._perTau
