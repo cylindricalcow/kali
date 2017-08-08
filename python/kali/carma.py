@@ -1022,9 +1022,10 @@ class CARMATask(object):
                 if res == 0 and lnPrior == 0.0:
                     noSuccess = False
                 else:
+                    
                     print 'SigmaTrial: %e'%(RhoGuess[self.p + self.q])
-                    sigmaFactor += 0.31622776601  # sqrt(0.1)  #*= to += since sigmaFacto==0
-
+                    #sigmaFactor *= 0.31622776601  # sqrt(0.1)  
+                    continue
             for dimNum in xrange(self.ndims):
                 xStart[dimNum + walkerNum*self.ndims] = ThetaGuess[dimNum]
         res = self._taskCython.fit_CARMAModel(
