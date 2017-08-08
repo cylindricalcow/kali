@@ -34,6 +34,9 @@ except ImportError:
     print 'kali is not setup. Setup kali by sourcing bin/setup.sh'
     sys.exit(1)
 
+class ContinueI(Exception):
+    pass   
+    
 fhgt = 10
 fwid = 16
 set_plot_params(useTex=True)
@@ -1024,8 +1027,8 @@ class CARMATask(object):
                 else:
                     
                     print 'SigmaTrial: %e'%(RhoGuess[self.p + self.q])
-                    #sigmaFactor *= 0.31622776601  # sqrt(0.1)  
-                    continue
+                    sigmaFactor *= 0.31622776601  # sqrt(0.1)  
+                    raise Exception('This is the exception you expect to handle')
             for dimNum in xrange(self.ndims):
                 xStart[dimNum + walkerNum*self.ndims] = ThetaGuess[dimNum]
         res = self._taskCython.fit_CARMAModel(
