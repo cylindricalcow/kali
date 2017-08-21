@@ -202,7 +202,7 @@ class CARMATask(object):
                                                                  self._nburn)
             self._pDIC = None
             self._dic = None
-            self._aic = None
+            self._aicc = None
             self._name = 'kali.CARMATask(%d, %d)'%(self.p, self.q)
         except AssertionError as err:
             raise AttributeError(str(err))
@@ -431,8 +431,8 @@ class CARMATask(object):
     def dic(self):
         return self._dic
     @property
-    def aic(self):
-        return self._aic
+    def aicc(self):
+        return self._aicc
 
     def __repr__(self):
         return "kali.carma.CARMATask(%d, %d, %d, %d, %d, %d, %d, %f)"%(self._p, self._q, self._nthreads,
@@ -1056,7 +1056,8 @@ class CARMATask(object):
         nparams=self.p+self.q
         devianceThetaBar = -2.0*self.logLikelihood(observedLC)
         barDeviance = np.mean(-2.0*self.LnLikelihood[:, self.nsteps/2:])
-        self._aic=2.0*nparams+devianceThetaBar+2.0*nparams*(nparams+1.0)/(observedLC.t.size-nparams-1.0)
+        aic=2*nparams-2*np.max(self.logLikelihood(observedLC))
+        self._aicc=aic+2.0*nparams*(nparams+1.0)/(observedLC.t.size-nparams-1.0)
         self._pDIC = barDeviance - devianceThetaBar
         self._dic = devianceThetaBar + 2.0*self.pDIC
         self.rootChain
