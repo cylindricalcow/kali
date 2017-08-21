@@ -1049,8 +1049,10 @@ class CARMATask(object):
         medTheta = np.require(medTheta, requirements=['F', 'A', 'W', 'O', 'E'])
         
         self.set(observedLC.dt, meanTheta)
+        nparams=self.p+self.q
         devianceThetaBar = -2.0*self.logLikelihood(observedLC)
         barDeviance = np.mean(-2.0*self.LnLikelihood[:, self.nsteps/2:])
+        self._aic=2.0*nparams+devianceThetaBar+2.0*nparams*(nparams+1.0)/(observedLC.t.size-nparams-1.0)
         self._pDIC = barDeviance - devianceThetaBar
         self._dic = devianceThetaBar + 2.0*self.pDIC
         self.rootChain
