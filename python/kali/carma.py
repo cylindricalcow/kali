@@ -202,6 +202,7 @@ class CARMATask(object):
                                                                  self._nburn)
             self._pDIC = None
             self._dic = None
+            self._aic = None
             self._name = 'kali.CARMATask(%d, %d)'%(self.p, self.q)
         except AssertionError as err:
             raise AttributeError(str(err))
@@ -429,6 +430,9 @@ class CARMATask(object):
     @property
     def dic(self):
         return self._dic
+    @property
+    def aic(self):
+        return self._aic
 
     def __repr__(self):
         return "kali.carma.CARMATask(%d, %d, %d, %d, %d, %d, %d, %f)"%(self._p, self._q, self._nthreads,
