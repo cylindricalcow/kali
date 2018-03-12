@@ -1,0 +1,17 @@
+Param	Median Value	16th Quantile	84th Quantile
+-----------------------------------------------------
+-----------------------------------------------------
+-----------------------------------------------------
+####Note that AR1 and AR2 are complex conjugates of each other
+AR1		34.043 years	21.638 years	60.946 years
+AR2		34.043 years	21.638 years	60.946 years
+AR3		360.077 years	218.268 years	574.247 years
+AR4		23234.840 years 19079.405 years 28580.481 years
+MA0     47.806 years	26.888 years	128.499 years
+MA1		169.025 years	93.245 years	329.044 years
+MA2		13.321 days		12.071 days		14.521 days
+
+sigma0  25.624 ppm
+sigma1  6.507 ppm
+sigma2  3.773 ppm
+sigma3  0.216 ppm
